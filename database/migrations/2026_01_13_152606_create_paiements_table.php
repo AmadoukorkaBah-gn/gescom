@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vente_id')->constrained('ventes')->onDelete('cascade');
             $table->decimal('montant_paye', 10, 2);
-            $table->dateTime('date_paiement')-> change();
+            $table->dateTime('date_paiement');
             $table->string('mode');
             $table->timestamps();
         });
