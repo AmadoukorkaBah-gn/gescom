@@ -1,11 +1,7 @@
 FROM php:8.3-fpm
 
 # Installer les dépendances système
-RUN mkdir -p storage/framework/cache \
-    storage/framework/sessions \
-    storage/framework/views \
-    storage/logs \
-    bootstrap/cache
+
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -35,6 +31,15 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 COPY . .
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache
+
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 RUN composer install --no-dev --optimize-autoloader
 
