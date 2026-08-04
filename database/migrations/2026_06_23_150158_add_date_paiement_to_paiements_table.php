@@ -11,9 +11,7 @@ return new class extends Migration
      */
    public function up()
 {
-    Schema::table('paiements', function (Blueprint $table) {
-        $table->dateTime('date_paiement')->nullable();
-    });
+    
 }
 
     /**
