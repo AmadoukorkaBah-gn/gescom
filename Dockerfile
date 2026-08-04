@@ -1,6 +1,11 @@
 FROM php:8.3-fpm
 
 # Installer les dépendances système
+RUN mkdir -p storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache
 RUN apt-get update && apt-get install -y \
     git \
     curl \
