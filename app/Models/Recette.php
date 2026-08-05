@@ -15,7 +15,7 @@ class Recette extends Model
     ];
 
     protected $casts = [
-        'date_recette' => 'datetime',
+        'date_vente' => 'datetime',
     ];
 
     public function caisse()
