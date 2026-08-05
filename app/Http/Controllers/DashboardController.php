@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $stockSubQuery = DB::table('mouvement_stocks')
             ->select(
                 'produit_id',
-                DB::raw('SUM(CASE WHEN type_mouvement = "entree" THEN quantite ELSE -quantite END) as stock')
+                DB::raw("SUM(CASE WHEN type_mouvement = 'entree' THEN quantite ELSE -quantite END) as stock")
             )
             ->groupBy('produit_id');
 
