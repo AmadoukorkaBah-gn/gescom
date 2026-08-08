@@ -17,14 +17,15 @@ RUN apt-get update && apt-get install -y \
     npm \
     nginx \
     supervisor \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo \
         pdo_pgsql \
         mbstring \
         zip \
         exif \
-        pcntl
-
+        pcntl \
+        gd
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
