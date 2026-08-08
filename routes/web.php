@@ -21,6 +21,7 @@ use App\Http\Controllers\AchatController;
 use App\Http\Controllers\PaiementAchatController;
 use App\Http\Controllers\DetteController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\VenteExportController;
 
 // Redirect root to the login page
 Route::redirect('/', '/login');
@@ -46,7 +47,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('ventes/{vente}/receipt', [VenteController::class, 'receipt'])->name('ventes.receipt');
         Route::resource('retours', RetourController::class);
         Route::resource('paiement', PaimentController::class);
-    });
+        Route::get('/ventes/export/pdf', [VenteExportController::class, 'pdf'])->name('ventes.export.pdf');
+Route::get('/ventes/export/excel', [VenteExportController::class, 'excel'])->name('ventes.export.excel');
+        });
 
     // ========== CLIENTS - Accessible à tous ==========
     Route::middleware(['role:admin,gestionnaire,vendeur'])->group(function () {

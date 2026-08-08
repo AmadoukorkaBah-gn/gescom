@@ -4,6 +4,14 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Gestion des Ventes</h1>
+        <div class="flex gap-2 mb-4">
+    <a href="{{ route('ventes.export.pdf') }}" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm">
+        Export PDF
+    </a>
+    <a href="{{ route('ventes.export.excel') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
+        Export Excel
+    </a>
+</div>
         <a href="{{ route('ventes.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Nouvelle Vente
         </a>

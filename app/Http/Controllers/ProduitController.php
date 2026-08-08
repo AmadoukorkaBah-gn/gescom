@@ -43,15 +43,22 @@ class ProduitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProduitRequest $request)
-    {
-        $data = $request->validated();
-        $data['user_id'] = Auth::user()->getOwnerId();
+   public function store(ProduitRequest $request)
+{
+    $data = $request->validated();
+    $data['user_id'] = Auth::user()->getOwnerId();
 
-        Produit::create($data);
+    $quantiteInitiale = (int) ($data['quantite_initiale'] ?? 0);
+    unset($data['quantite_initiale']);
 
-        return redirect()->route('produits.index')->with('success', 'Produit créé avec succès.');
+    $produit = Produit::create($data);
+
+    if ($quantiteInitiale > 0) {
+        $produit->incrementStock($quantiteInitiale, 'stock_initial');
     }
+
+    return redirect()->route('produits.index')->with('success', 'Produit créé avec succès.');
+}
 
     /**
      * Display the specified resource.

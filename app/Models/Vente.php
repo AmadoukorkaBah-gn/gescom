@@ -11,6 +11,10 @@ class Vente extends Model
         'date_vente',
         'client_id',
         'montant_total',
+        'montant_brut',
+        'type_remise',
+        'valeur_remise',
+         'montant_remise',
         'statut',
     ];
 

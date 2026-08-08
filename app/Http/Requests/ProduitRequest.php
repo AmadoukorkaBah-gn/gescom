@@ -20,13 +20,14 @@ class ProduitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom_produit'    => 'required|string|max:255',
-            'categorie_id'   => 'required|exists:categories,id',
-            'fournisseur_id' => 'required|exists:fournisseurs,id',
-            'prix_produit'   => 'required|numeric|min:0',
-            'prix_vente'     => 'required|numeric|min:0',
-            'stock_minimum'  => 'required|integer|min:0',
-            'statut'         => 'required|boolean',
+            'nom_produit'        => 'required|string|max:255',
+            'categorie_id'       => 'required|exists:categories,id',
+            'fournisseur_id'     => 'nullable|exists:fournisseurs,id',
+            'prix_produit'       => 'required|numeric|min:0',
+            'prix_vente'         => 'required|numeric|min:0',
+            'stock_minimum'      => 'required|integer|min:0',
+            'quantite_initiale'  => 'nullable|integer|min:0',
+            'statut'             => 'required|boolean',
         ];
     }
 
@@ -36,7 +37,7 @@ class ProduitRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'statut' => $this->statut === 'actif' ? true : false,
-        ]);
+    'statut' => $this->statut == '1' ? true : false,
+]);
     }
 }

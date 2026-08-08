@@ -12,6 +12,7 @@ return new class extends Migration
             $table->string('libelle');
             $table->decimal('montant', 12, 2);
             $table->dateTime('date_recette');
+            $table->dateTime('date_vente')->nullable();
             $table->foreignId('caisse_id')->constrained('caisses')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

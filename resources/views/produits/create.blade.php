@@ -34,14 +34,20 @@
             </div>
 
             <div>
-                <label for="fournisseur_id" class="block text-sm font-medium text-gray-700">Fournisseur</label>
-                <select name="fournisseur_id" id="fournisseur_id" class="mt-1 block w-full border rounded px-3 py-2" required>
-                    <option value="">-- Choisir --</option>
-                    @foreach($fournisseurs as $fournisseur)
-                        <option value="{{ $fournisseur->id }}" {{ old('fournisseur_id') == $fournisseur->id ? 'selected' : '' }}>{{ $fournisseur->nom_fournisseur }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <label for="fournisseur_id" class="block text-sm font-medium text-gray-700">Fournisseur (optionnel)</label>
+    <select name="fournisseur_id" id="fournisseur_id" class="mt-1 block w-full border rounded px-3 py-2">
+        <option value="">-- Aucun fournisseur --</option>
+        @foreach($fournisseurs as $fournisseur)
+            <option value="{{ $fournisseur->id }}" {{ old('fournisseur_id') == $fournisseur->id ? 'selected' : '' }}>{{ $fournisseur->nom_fournisseur }}</option>
+        @endforeach
+    </select>
+</div>
+
+<div>
+    <label for="quantite_initiale" class="block text-sm font-medium text-gray-700">Quantité en stock (optionnel)</label>
+    <input type="number" name="quantite_initiale" id="quantite_initiale" min="0" value="{{ old('quantite_initiale', 0) }}" class="mt-1 block w-full border rounded px-3 py-2">
+    <p class="text-xs text-gray-500 mt-1">Laisse à 0 si tu comptes plutôt passer par un achat fournisseur.</p>
+</div>
 
             <div>
                 <label for="prix_produit" class="block text-sm font-medium text-gray-700">Prix d'achat</label>
