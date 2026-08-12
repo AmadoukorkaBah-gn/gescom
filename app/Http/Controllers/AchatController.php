@@ -32,14 +32,28 @@ class AchatController extends Controller
     /**
      * Formulaire de création
      */
-    public function create()
-    {
-        $ownerId = Auth::user()->getOwnerId();
-        $fournisseurs = Fournisseur::where('user_id', $ownerId)->orderBy('nom_fournisseur')->get();
-        $produits = Produit::where('user_id', $ownerId)->orderBy('nom_produit')->get();
+public function create()
+{
+    $ownerId = Auth::user()->getOwnerId();
 
-        return view('achats.create', compact('fournisseurs', 'produits'));
-    }
+    $fournisseurs = Fournisseur::where('user_id', $ownerId)
+        ->orderBy('nom_fournisseur')
+        ->get();
+
+    $produits = Produit::where('user_id', $ownerId)
+        ->orderBy('nom_produit')
+        ->get();
+
+    $categories = \App\Models\Categorie::where('user_id', $ownerId)
+        ->orderBy('nom_categorie')
+        ->get();
+
+    return view('achats.create', compact(
+        'fournisseurs',
+        'produits',
+        'categories'
+    ));
+}
 
     /**
      * Enregistrer un achat (sans stock)
@@ -54,7 +68,7 @@ class AchatController extends Controller
             'items.*.produit_id'    => 'required|exists:produits,id',
             'items.*.quantite'      => 'required|integer|min:1',
             'items.*.prix_unitaire' => 'required|numeric|min:0',
-            'items.*.date_peremption' => 'required|date',
+            'items.*.date_peremption' => 'nullable|date',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -231,4 +245,76 @@ class AchatController extends Controller
 
         return redirect()->route('achats.index')->with('success', $message);
     }
+/**
+ * Création rapide d'un fournisseur depuis la page achat
+ */
+public function ajaxFournisseur(Request $request)
+{
+    $ownerId = Auth::user()->getOwnerId();
+
+    $validated = $request->validate([
+        'nom_fournisseur'     => 'required|string|max:255',
+        'email'               => 'nullable|email|max:255',
+        'contact_fournisseur' => 'nullable|string|max:255',
+        'adresse_fournisseur' => 'nullable|string|max:255',
+    ]);
+
+    $fournisseur = Fournisseur::create([
+        'user_id'             => $ownerId,
+        'nom_fournisseur'     => $validated['nom_fournisseur'],
+        'email'               => $validated['email'] ?? null,
+        'contact_fournisseur' => $validated['contact_fournisseur'] ?? null,
+        'adresse_fournisseur' => $validated['adresse_fournisseur'] ?? null,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Fournisseur ajouté avec succès.',
+        'fournisseur' => [
+            'id' => $fournisseur->id,
+            'nom' => $fournisseur->nom_fournisseur,
+        ],
+    ]);
+}
+
+
+/**
+ * Création rapide d'un produit depuis la page achat
+ */
+public function ajaxProduit(Request $request)
+{
+    $ownerId = Auth::user()->getOwnerId();
+
+    $validated = $request->validate([
+        'nom_produit'    => 'required|string|max:255',
+        'categorie_id'   => 'required|exists:categories,id',
+        'fournisseur_id' => 'nullable|exists:fournisseurs,id',
+        'prix_produit'   => 'required|numeric|min:0',
+        'prix_vente'     => 'required|numeric|min:0',
+        'stock_minimum'  => 'required|integer|min:0',
+        'statut'         => 'required|boolean',
+    ]);
+
+    $produit = Produit::create([
+        'user_id'        => $ownerId,
+        'nom_produit'    => $validated['nom_produit'],
+        'categorie_id'   => $validated['categorie_id'],
+        'fournisseur_id' => $validated['fournisseur_id'] ?? null,
+        'prix_produit'   => $validated['prix_produit'],
+        'prix_vente'     => $validated['prix_vente'],
+        'stock_minimum'  => $validated['stock_minimum'],
+        'statut'         => $validated['statut'],
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Produit ajouté avec succès.',
+        'produit' => [
+            'id' => $produit->id,
+            'nom' => $produit->nom_produit,
+        ],
+    ]);
+}
+
+
 }

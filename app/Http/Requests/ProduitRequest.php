@@ -27,6 +27,7 @@ class ProduitRequest extends FormRequest
             'prix_vente'         => 'required|numeric|min:0',
             'stock_minimum'      => 'required|integer|min:0',
             'quantite_initiale'  => 'nullable|integer|min:0',
+            'date_peremption' => 'nullable|date',
             'statut'             => 'required|boolean',
         ];
     }

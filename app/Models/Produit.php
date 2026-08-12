@@ -56,22 +56,22 @@ class Produit extends Model
     }
 
     // Ajouter du stock
-    public function incrementStock($quantite, $raison = null)
-    {
-        $this->stocks()->create([
-            'quantite' => $quantite,
-            'date_entree' => now(),
-            'date_peremption' => null,
-        ]);
+public function incrementStock($quantite, $raison = null, $datePeremption = null)
+{
+    $this->stocks()->create([
+        'quantite' => $quantite,
+        'date_entree' => now(),
+        'date_peremption' => $datePeremption,
+    ]);
 
-        MouvementStock::create([
-            'produit_id' => $this->id,
-            'type_mouvement' => 'entree',
-            'quantite' => $quantite,
-            'date_mouvement' => now(),
-            'raison' => $raison,
-        ]);
-    }
+    MouvementStock::create([
+        'produit_id' => $this->id,
+        'type_mouvement' => 'entree',
+        'quantite' => $quantite,
+        'date_mouvement' => now(),
+        'raison' => $raison,
+    ]);
+}
 
     // Retirer du stock
     public function decrementStock($quantite, $raison = null)

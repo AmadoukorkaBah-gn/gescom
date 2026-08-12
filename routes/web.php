@@ -22,6 +22,7 @@ use App\Http\Controllers\PaiementAchatController;
 use App\Http\Controllers\DetteController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\VenteExportController;
+use App\Http\Controllers\InventaireController;
 
 // Redirect root to the login page
 Route::redirect('/', '/login');
@@ -40,17 +41,21 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     // ========== VENTES & PAIEMENTS - Vendeur, Gestionnaire, Comptable ==========
-    Route::middleware(['role:admin,gestionnaire,vendeur'])->group(function () {
+   Route::middleware(['role:admin,gestionnaire,vendeur'])->group(function () {
+        // IMPORTANT : routes fixes déclarées AVANT Route::resource('ventes', ...)
+        // sinon elles sont capturées par ventes/{vente} → 404
+        Route::get('/ventes/credit', [VenteController::class, 'credit'])->name('ventes.credit');
+        Route::get('/ventes/export/pdf', [VenteExportController::class, 'pdf'])->name('ventes.export.pdf');
+        Route::get('/ventes/export/excel', [VenteExportController::class, 'excel'])->name('ventes.export.excel');
+
         Route::resource('ventes', VenteController::class);
+
         Route::get('ventes/{vente}/process', [VenteController::class, 'showProcessForm'])->name('ventes.process.form');
         Route::post('ventes/{vente}/process', [VenteController::class, 'process'])->name('ventes.process');
         Route::get('ventes/{vente}/receipt', [VenteController::class, 'receipt'])->name('ventes.receipt');
         Route::resource('retours', RetourController::class);
         Route::resource('paiement', PaimentController::class);
-        Route::get('/ventes/export/pdf', [VenteExportController::class, 'pdf'])->name('ventes.export.pdf');
-Route::get('/ventes/export/excel', [VenteExportController::class, 'excel'])->name('ventes.export.excel');
-        });
-
+    });
     // ========== CLIENTS - Accessible à tous ==========
     Route::middleware(['role:admin,gestionnaire,vendeur'])->group(function () {
         Route::resource('clients', ClientController::class);
@@ -65,7 +70,26 @@ Route::get('/ventes/export/excel', [VenteExportController::class, 'excel'])->nam
         Route::resource('categorie', CategorieController::class);
         Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
         Route::get('stocks/mouvements', [StockController::class, 'mouvements'])->name('stocks.mouvements');
-    });
+         Route::get('/inventaire', [InventaireController::class, 'index'])
+        ->name('inventaire.index');
+
+    Route::get('/inventaire/recapitulatif', [InventaireController::class, 'recapitulatif'])
+        ->name('inventaire.recapitulatif');
+
+    Route::get('/inventaire/historique', [InventaireController::class, 'historique'])
+        ->name('inventaire.historique');
+
+    Route::get('/inventaire/create', [InventaireController::class, 'create'])
+        ->name('inventaire.create');
+
+    Route::post('/inventaire', [InventaireController::class, 'store'])
+        ->name('inventaire.store');
+
+    Route::get('/inventaire/{inventaire}', [InventaireController::class, 'show'])
+        ->name('inventaire.show');
+        Route::post('/inventaire/enregistrer', [InventaireController::class, 'enregistrer'])
+    ->name('inventaire.enregistrer');
+        });
 
     // ========== ACHATS / APPROVISIONNEMENT - Admin et Gestionnaire ==========
     Route::middleware(['role:admin,gestionnaire'])->group(function () {
@@ -75,6 +99,11 @@ Route::get('/ventes/export/excel', [VenteExportController::class, 'excel'])->nam
         
         // Paiements fournisseurs
         Route::resource('paiement-achats', PaiementAchatController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+        Route::post('/achats/ajax/fournisseur', [AchatController::class, 'ajaxFournisseur'])
+    ->name('achats.ajax.fournisseur');
+
+Route::post('/achats/ajax/produit', [AchatController::class, 'ajaxProduit'])
+    ->name('achats.ajax.produit');
     });
 
     // ========== FOURNISSEURS - Admin seulement ==========

@@ -209,4 +209,20 @@ class VenteController extends Controller
         $pdf = Pdf::loadView('receipts.receipt', compact('vente'));
         return $pdf->download('receipt_' . $vente->id . '_' . now()->format('Y-m-d') . '.pdf');
     }
+  public function credit()
+{
+    $ownerId = Auth::user()->getOwnerId();
+
+    $ventes = Vente::with(['client', 'paiements', 'details.produit'])
+        ->where('user_id', $ownerId)
+        ->latest('date_vente')
+        ->get()
+        ->filter(function ($vente) {
+            $totalPaye = $vente->paiements->sum('montant_paye');
+            return (float) $vente->montant_total > (float) $totalPaye;
+        })
+        ->groupBy('client_id'); // <-- on regroupe par client
+
+    return view('ventes.credit', compact('ventes'));
+}
 }

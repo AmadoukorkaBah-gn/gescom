@@ -47,6 +47,24 @@
     <label for="quantite_initiale" class="block text-sm font-medium text-gray-700">Quantité en stock (optionnel)</label>
     <input type="number" name="quantite_initiale" id="quantite_initiale" min="0" value="{{ old('quantite_initiale', 0) }}" class="mt-1 block w-full border rounded px-3 py-2">
     <p class="text-xs text-gray-500 mt-1">Laisse à 0 si tu comptes plutôt passer par un achat fournisseur.</p>
+    <div>
+    <label for="date_peremption" class="block text-sm font-medium text-gray-700">
+        Date de péremption
+        <span class="text-gray-400">(optionnelle)</span>
+    </label>
+
+    <input
+        type="date"
+        name="date_peremption"
+        id="date_peremption"
+        value="{{ old('date_peremption') }}"
+        class="mt-1 block w-full border rounded px-3 py-2"
+    >
+
+    <p class="text-xs text-gray-500 mt-1">
+        Laisser vide pour les produits sans date de péremption.
+    </p>
+</div>
 </div>
 
             <div>

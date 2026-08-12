@@ -48,14 +48,20 @@ class ProduitController extends Controller
     $data = $request->validated();
     $data['user_id'] = Auth::user()->getOwnerId();
 
-    $quantiteInitiale = (int) ($data['quantite_initiale'] ?? 0);
-    unset($data['quantite_initiale']);
+$quantiteInitiale = (int) ($data['quantite_initiale'] ?? 0);
+$datePeremption = $data['date_peremption'] ?? null;
 
-    $produit = Produit::create($data);
+unset($data['quantite_initiale'], $data['date_peremption']);
 
-    if ($quantiteInitiale > 0) {
-        $produit->incrementStock($quantiteInitiale, 'stock_initial');
-    }
+$produit = Produit::create($data);
+
+if ($quantiteInitiale > 0) {
+    $produit->incrementStock(
+        $quantiteInitiale,
+        'stock_initial',
+        $datePeremption
+    );
+}
 
     return redirect()->route('produits.index')->with('success', 'Produit créé avec succès.');
 }
