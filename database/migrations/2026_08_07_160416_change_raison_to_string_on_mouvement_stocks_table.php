@@ -1,17 +1,22 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        DB::statement("ALTER TABLE mouvement_stocks MODIFY raison VARCHAR(50) NULL");
+        Schema::table('mouvement_stocks', function (Blueprint $table) {
+            $table->string('raison', 50)->nullable()->change();
+        });
     }
 
     public function down(): void
     {
-        DB::statement("ALTER TABLE mouvement_stocks MODIFY raison ENUM('achat','vente','retour') NULL");
+        Schema::table('mouvement_stocks', function (Blueprint $table) {
+            $table->string('raison', 50)->nullable()->change();
+        });
     }
 };
