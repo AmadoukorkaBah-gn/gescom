@@ -76,30 +76,32 @@ class SuperAdminController extends Controller
         
         // Évolution des abonnements (12 derniers mois)
 $evolutionAbonnements = User::where('is_super_admin', false)
-    ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as mois, COUNT(*) as total")
+    ->selectRaw("TO_CHAR(created_at, 'YYYY-MM') as mois, COUNT(*) as total")
     ->where('created_at', '>=', now()->subMonths(12))
-    ->groupBy('mois')
+    ->groupByRaw("TO_CHAR(created_at, 'YYYY-MM')")
     ->orderBy('mois')
     ->get()
-    ->map(function($item) {
+    ->map(function ($item) {
         return [
             'mois' => $item->mois,
-            'total' => (int)$item->total
+            'total' => (int) $item->total,
         ];
     });
 
 // Revenu mensuel (12 derniers mois)
-$revenuMensuel = \App\Models\PaiementAbonnement::selectRaw("DATE_FORMAT(date_paiement, '%Y-%m') as mois, SUM(montant) as total")
+$revenuMensuel = \App\Models\PaiementAbonnement::selectRaw(
+        "TO_CHAR(date_paiement, 'YYYY-MM') as mois, SUM(montant) as total"
+    )
     ->where('date_paiement', '>=', now()->subMonths(12))
-    ->groupBy('mois')
+    ->groupByRaw("TO_CHAR(date_paiement, 'YYYY-MM')")
     ->orderBy('mois')
     ->get()
-            ->map(function($item) {
-                return [
-                    'mois' => $item->mois,
-                    'total' => (float)$item->total
-                ];
-            });
+    ->map(function ($item) {
+        return [
+            'mois' => $item->mois,
+            'total' => (float) $item->total,
+        ];
+    });
         
         // Alertes : Abonnements expirés
         $alertesAbonnementsExpires = User::where('is_super_admin', false)
