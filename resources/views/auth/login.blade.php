@@ -3,7 +3,7 @@
         <div class="max-w-md w-full space-y-8">
             <div class="text-center">
                 <div class="flex justify-center mb-4">
-                    <img src="/build/assets/ChatGPT Image 20 janv. 2026, 12_59_37.png" alt="KorNet Logo" class="h-28 w-28 rounded-full shadow-lg" />
+                    <img src="{{ asset('images/logo.png') }}" alt="KorNet Logo" class="h-28 w-28 rounded-full shadow-lg" />
                 </div>
                 <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">Connexion à KorNet</h2>
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Entrez vos identifiants pour accéder à votre compte</p>

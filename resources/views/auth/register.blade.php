@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="w-full flex justify-center mt-8">
-        <img src="{{ asset('/build/assets/ChatGPT%20Image%2020%20janv.%202026,%2012_59_37.png') }}" alt="Logo" class="h-20 w-20 rounded-full shadow-lg" />
-    </div>
+         <img src="{{ asset('images/logo.png') }}" alt="KorNet Logo" class="h-28 w-28 rounded-full shadow-lg" />
+                </div>
     <div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <div class="text-center">

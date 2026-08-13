@@ -1,18 +1,47 @@
-
 @extends('layouts.app')
 
 @section('content')
 
-<div class="container mx-auto px-4 py-8">
+<style>
+    /* Police Inter : très lisible sur écran, bon support des accents français */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    #achatPage {
+        font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+        font-size: 15.5px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    #achatPage input,
+    #achatPage select,
+    #achatPage textarea,
+    #achatPage button {
+        font-family: inherit;
+    }
+
+    #achatPage input,
+    #achatPage select,
+    #achatPage textarea {
+        font-size: 15px;
+        min-height: 44px; /* confort tactile mobile */
+    }
+
+    #achatPage textarea {
+        min-height: 70px;
+    }
+</style>
+
+<div id="achatPage" class="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
 
     <!-- =====================================================
          TITRE
     ====================================================== -->
 
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-6">
 
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">
                 Nouveau Achat
             </h1>
 
@@ -22,7 +51,7 @@
         </div>
 
         <a href="{{ route('achats.index') }}"
-           class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+           class="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-sm w-full sm:w-auto">
             ← Retour aux achats
         </a>
 
@@ -41,16 +70,16 @@
              INFORMATIONS ACHAT
         ================================================== -->
 
-        <div class="bg-white shadow-sm border border-gray-200 rounded-xl p-6 mb-6">
+        <div class="bg-white shadow-sm border border-gray-200 rounded-xl p-4 sm:p-6 mb-6">
 
             <div class="flex items-center gap-3 mb-5">
 
-                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                <div class="w-10 h-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
                     <span class="text-blue-600 text-xl">🧾</span>
                 </div>
 
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-800">
+                    <h2 class="text-base sm:text-lg font-semibold text-gray-800">
                         Informations de l'achat
                     </h2>
 
@@ -62,7 +91,7 @@
             </div>
 
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
 
                 <!-- FOURNISSEUR -->
 
@@ -77,7 +106,7 @@
                         <select
                             name="fournisseur_id"
                             id="fournisseur_id"
-                            class="flex-1 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            class="flex-1 min-w-0 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             required
                         >
 
@@ -97,7 +126,7 @@
                         <button
                             type="button"
                             onclick="ouvrirModal('modalFournisseur')"
-                            class="px-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold"
+                            class="shrink-0 w-11 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold text-lg"
                             title="Ajouter un fournisseur"
                         >
                             +
@@ -133,7 +162,7 @@
 
                 <!-- FACTURE -->
 
-                <div>
+                <div class="sm:col-span-2 lg:col-span-1">
 
                     <label
                         for="numero_facture"
@@ -162,13 +191,13 @@
              PRODUITS
         ================================================== -->
 
-        <div class="bg-white shadow-sm border border-gray-200 rounded-xl p-6 mb-6">
+        <div class="bg-white shadow-sm border border-gray-200 rounded-xl p-4 sm:p-6 mb-6">
 
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
 
                 <div>
 
-                    <h2 class="text-lg font-semibold text-gray-800">
+                    <h2 class="text-base sm:text-lg font-semibold text-gray-800">
                         Produits à acheter
                     </h2>
 
@@ -179,17 +208,17 @@
                 </div>
 
 
-                <div class="flex gap-2">
+                <div class="grid grid-cols-2 sm:flex gap-2">
 
                     <!-- AJOUTER PRODUIT -->
 
                     <button
                         type="button"
                         onclick="ouvrirModal('modalProduit')"
-                        class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg"
+                        class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-3 sm:px-4 py-2.5 rounded-lg text-sm sm:text-base whitespace-nowrap"
                     >
-                        <span class="text-lg">+</span>
-                        Ajouter produit
+                        <span class="text-lg leading-none">+</span>
+                        <span>Ajouter produit</span>
                     </button>
 
 
@@ -198,10 +227,10 @@
                     <button
                         type="button"
                         id="addItem"
-                        class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg"
+                        class="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-3 sm:px-4 py-2.5 rounded-lg text-sm sm:text-base whitespace-nowrap"
                     >
-                        <span class="text-lg">+</span>
-                        Ajouter ligne
+                        <span class="text-lg leading-none">+</span>
+                        <span>Ajouter ligne</span>
                     </button>
 
                 </div>
@@ -213,13 +242,13 @@
 
             <div id="itemsContainer">
 
-                <div class="item-row border border-gray-200 rounded-xl p-4 mb-4 bg-gray-50">
+                <div class="item-row border border-gray-200 rounded-xl p-3 sm:p-4 mb-4 bg-gray-50">
 
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
 
                         <!-- PRODUIT -->
 
-                        <div>
+                        <div class="lg:col-span-1 sm:col-span-2">
 
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 Produit
@@ -293,14 +322,14 @@
 
                         <div>
 
-                           <label class="block text-sm font-medium text-gray-700">
-    Date de péremption
-    <span class="text-gray-400">(facultative)</span>
-</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Date de péremption
+                                <span class="text-gray-400 font-normal">(facultative)</span>
+                            </label>
 
-<input type="date"
-       name="items[0][date_peremption]"
-       class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                            <input type="date"
+                                   name="items[0][date_peremption]"
+                                   class="block w-full border-gray-300 rounded-lg shadow-sm">
 
                         </div>
 
@@ -311,7 +340,7 @@
 
                             <button
                                 type="button"
-                                class="remove-item w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg"
+                                class="remove-item w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm"
                                 style="display:none;"
                             >
                                 Supprimer
@@ -337,7 +366,7 @@
 
             <button
                 type="submit"
-                class="inline-flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-sm"
+                class="inline-flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-sm order-1 sm:order-none"
             >
                 Enregistrer l'achat
             </button>
@@ -372,13 +401,13 @@
     ></div>
 
 
-    <div class="relative flex items-center justify-center min-h-screen p-4">
+    <div class="relative flex items-center justify-center min-h-screen p-3 sm:p-4">
 
-        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
+        <div class="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl">
 
             <!-- HEADER -->
 
-            <div class="px-6 py-4 border-b flex items-center justify-between">
+            <div class="sticky top-0 bg-white px-4 sm:px-6 py-4 border-b flex items-center justify-between">
 
                 <div>
 
@@ -395,7 +424,7 @@
                 <button
                     type="button"
                     onclick="fermerModal('modalFournisseur')"
-                    class="text-gray-400 hover:text-gray-700 text-2xl"
+                    class="text-gray-400 hover:text-gray-700 text-2xl leading-none px-2"
                 >
                     ×
                 </button>
@@ -405,7 +434,7 @@
 
             <!-- FORM -->
 
-            <form id="fournisseurForm" class="p-6">
+            <form id="fournisseurForm" class="p-4 sm:p-6">
 
                 <div class="space-y-4">
 
@@ -482,12 +511,12 @@
                 ></div>
 
 
-                <div class="flex justify-end gap-3 mt-6">
+                <div class="flex flex-col sm:flex-row sm:justify-end gap-3 mt-6">
 
                     <button
                         type="button"
                         onclick="fermerModal('modalFournisseur')"
-                        class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700"
+                        class="px-4 py-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 order-2 sm:order-1"
                     >
                         Annuler
                     </button>
@@ -495,7 +524,7 @@
                     <button
                         type="submit"
                         id="btnFournisseur"
-                        class="px-5 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold"
+                        class="px-5 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold order-1 sm:order-2"
                     >
                         Ajouter
                     </button>
@@ -527,13 +556,13 @@
     ></div>
 
 
-    <div class="relative flex items-center justify-center min-h-screen p-4">
+    <div class="relative flex items-center justify-center min-h-screen p-3 sm:p-4">
 
         <div class="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl">
 
             <!-- HEADER -->
 
-            <div class="sticky top-0 bg-white px-6 py-4 border-b flex items-center justify-between">
+            <div class="sticky top-0 bg-white px-4 sm:px-6 py-4 border-b flex items-center justify-between">
 
                 <div>
 
@@ -550,7 +579,7 @@
                 <button
                     type="button"
                     onclick="fermerModal('modalProduit')"
-                    class="text-gray-400 hover:text-gray-700 text-2xl"
+                    class="text-gray-400 hover:text-gray-700 text-2xl leading-none px-2"
                 >
                     ×
                 </button>
@@ -560,7 +589,7 @@
 
             <!-- FORM -->
 
-            <form id="produitForm" class="p-6">
+            <form id="produitForm" class="p-4 sm:p-6">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
@@ -742,12 +771,12 @@
                 ></div>
 
 
-                <div class="flex justify-end gap-3 mt-6">
+                <div class="flex flex-col sm:flex-row sm:justify-end gap-3 mt-6">
 
                     <button
                         type="button"
                         onclick="fermerModal('modalProduit')"
-                        class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700"
+                        class="px-4 py-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 order-2 sm:order-1"
                     >
                         Annuler
                     </button>
@@ -755,7 +784,7 @@
                     <button
                         type="submit"
                         id="btnProduit"
-                        class="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold"
+                        class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold order-1 sm:order-2"
                     >
                         Ajouter le produit
                     </button>
@@ -826,14 +855,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const newRow = document.createElement('div');
 
         newRow.className =
-            'item-row border border-gray-200 rounded-xl p-4 mb-4 bg-gray-50';
+            'item-row border border-gray-200 rounded-xl p-3 sm:p-4 mb-4 bg-gray-50';
 
 
         newRow.innerHTML = `
 
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
 
-                <div>
+                <div class="lg:col-span-1 sm:col-span-2">
 
                     <label class="block text-sm font-medium text-gray-700 mb-1">
                         Produit
@@ -898,22 +927,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                 <div>
-    <label class="block text-sm font-medium text-gray-700">
-        Date de péremption
-        <span class="text-gray-400">(facultative)</span>
-    </label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Date de péremption
+                        <span class="text-gray-400 font-normal">(facultative)</span>
+                    </label>
 
-    <input type="date"
-           name="items[${itemIndex}][date_peremption]"
-           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-</div>
+                    <input type="date"
+                           name="items[${itemIndex}][date_peremption]"
+                           class="block w-full border-gray-300 rounded-lg">
+                </div>
 
 
                 <div class="flex items-end">
 
                     <button
                         type="button"
-                        class="remove-item w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg"
+                        class="remove-item w-full bg-red-500 hover:bg-red-600 text-white font-medium py-2.5 px-4 rounded-lg text-sm"
                     >
                         Supprimer
                     </button>
@@ -1260,4 +1289,3 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 @endsection
-
