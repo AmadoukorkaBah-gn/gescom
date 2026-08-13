@@ -145,11 +145,18 @@
 
                             <option
                                 value="{{ $vente->id }}"
-                                data-produits='@json($vente->details->map(fn($d) => ["id" => $d->produit->id, "nom" => $d->produit->nom_produit]))'
+                                data-produits='@json(
+                                    $vente->details->map(
+                                        fn($d) => [
+                                            "id" => $d->produit->id,
+                                            "nom" => $d->produit->nom_produit
+                                        ]
+                                    )
+                                )'
                             >
 
                                 Vente N°{{ $vente->id }}
-                                — {{ $vente->client->nom_client }}
+                                — {{ $vente->client->nom_client ?? 'Client non renseigné' }}
 
                             </option>
 
@@ -230,6 +237,7 @@
                             name="quantite"
                             required
                             min="1"
+                            value="{{ old('quantite') }}"
 
                             class="w-full
                                    rounded-xl
@@ -263,6 +271,7 @@
                             id="raison"
                             name="raison"
                             required
+                            value="{{ old('raison') }}"
                             placeholder="Ex : Produit défectueux"
 
                             class="w-full
@@ -352,9 +361,12 @@
                             -- Sélectionnez une caisse --
                         </option>
 
-                        @foreach(\App\Models\Caisse::orderBy('nom')->get() as $caisse)
+                        @forelse($caisses as $caisse)
 
-                            <option value="{{ $caisse->id }}">
+                            <option
+                                value="{{ $caisse->id }}"
+                                {{ old('caisse_id') == $caisse->id ? 'selected' : '' }}
+                            >
 
                                 {{ $caisse->nom }}
                                 — Solde :
@@ -363,7 +375,13 @@
 
                             </option>
 
-                        @endforeach
+                        @empty
+
+                            <option value="" disabled>
+                                Aucune caisse disponible pour votre entreprise
+                            </option>
+
+                        @endforelse
 
                     </select>
 
@@ -487,27 +505,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const venteSelect = document.getElementById('vente_select');
     const produitSelect = document.getElementById('produit_select');
 
+    if (!venteSelect || !produitSelect) {
+        return;
+    }
+
     venteSelect.addEventListener('change', function () {
 
         const selectedOption = venteSelect.selectedOptions[0];
 
-        const produits = selectedOption.dataset.produits
+        const produits = selectedOption && selectedOption.dataset.produits
             ? JSON.parse(selectedOption.dataset.produits)
             : [];
-
 
         // Vider le select des produits
         produitSelect.innerHTML =
             '<option value="">-- Sélectionnez un produit --</option>';
 
-
         // Ajouter les produits disponibles pour cette vente
-        produits.forEach(p => {
+        produits.forEach(function (p) {
 
             const option = document.createElement('option');
 
             option.value = p.id;
-
             option.textContent = p.nom;
 
             produitSelect.appendChild(option);

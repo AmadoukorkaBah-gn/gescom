@@ -30,13 +30,28 @@ class RetourController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $ownerId = Auth::user()->getOwnerId();
-        $ventes = Vente::where('user_id', $ownerId)->with('details.produit', 'client')->get();
-        $produits = Produit::where('user_id', $ownerId)->get();
-        return view('retours.create', compact('ventes', 'produits'));
-    }
+  public function create()
+{
+    $ownerId = Auth::user()->getOwnerId();
+
+    $ventes = Vente::where('user_id', $ownerId)
+        ->with('details.produit', 'client')
+        ->get();
+
+    $produits = Produit::where('user_id', $ownerId)
+        ->get();
+
+    // Uniquement les caisses de l'entreprise / propriétaire connecté
+    $caisses = \App\Models\Caisse::where('user_id', $ownerId)
+        ->orderBy('nom')
+        ->get();
+
+    return view('retours.create', compact(
+        'ventes',
+        'produits',
+        'caisses'
+    ));
+}
 
     /**
      * Store a newly created resource in storage.

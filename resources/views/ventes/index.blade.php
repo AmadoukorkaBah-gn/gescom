@@ -198,7 +198,8 @@
                overflow-hidden"
     >
 
-        {{-- En-tête mobile du tableau --}}
+        {{-- EN-TÊTE DU TABLEAU --}}
+
         <div class="px-4 sm:px-5 py-4 border-b border-gray-100 bg-gray-50/70">
 
             <div class="flex items-center justify-between gap-3">
@@ -244,7 +245,7 @@
 
         <div class="overflow-x-auto">
 
-            <table class="w-full min-w-[760px] divide-y divide-gray-100">
+            <table class="w-full min-w-[700px] divide-y divide-gray-100">
 
                 <thead class="bg-gray-50">
 
@@ -433,7 +434,11 @@
                         </td>
 
 
-                        {{-- ACTIONS --}}
+                        {{-- =================================================
+                             ACTIONS
+                             MODIFICATION RETIRÉE
+                        ================================================== --}}
+
                         <td
                             class="px-4 sm:px-5 py-4
                                    text-sm"
@@ -543,39 +548,15 @@
                                 @endif
 
 
-                                {{-- MODIFIER --}}
+                                {{-- =================================================
+                                     MODIFIER SUPPRIMÉ
+                                     L'action ventes.edit n'est plus affichée.
+                                ================================================== --}}
+
+
+                                {{-- SUPPRIMER --}}
                                 @if($vente->statut == 'en_cours')
 
-                                    <a
-                                        href="{{ route('ventes.edit', $vente) }}"
-                                        class="w-9 h-9
-                                               flex items-center justify-center
-                                               rounded-lg
-                                               text-yellow-600
-                                               hover:bg-yellow-50
-                                               active:bg-yellow-100
-                                               transition"
-                                        title="Modifier"
-                                    >
-
-                                        <svg
-                                            class="h-4.5 w-4.5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M15.232 5.232l3.536 3.536M9 13.5V15h1.5l7.5-7.5-1.5-1.5L9 13.5z"
-                                            />
-                                        </svg>
-
-                                    </a>
-
-
-                                    {{-- SUPPRIMER --}}
                                     <form
                                         action="{{ route('ventes.destroy', $vente) }}"
                                         method="POST"
@@ -697,9 +678,9 @@
         </div>
 
 
-        {{-- =====================================================
+        {{-- =========================================================
              PAGINATION
-        ====================================================== --}}
+        ========================================================== --}}
 
         @if(method_exists($ventes, 'links'))
 
