@@ -2,38 +2,78 @@
 
 @section('content')
 
-<div class="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    #fournisseursPage {
+        font-family: 'Inter', ui-sans-serif, system-ui, -apple-system,
+                     BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+</style>
+
+
+<div id="fournisseursPage"
+     class="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-5 sm:py-6 lg:py-8">
+
 
     {{-- =========================================================
          EN-TÊTE
     ========================================================== --}}
 
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex flex-col sm:flex-row
+                sm:items-center
+                sm:justify-between
+                gap-4
+                mb-6 sm:mb-8">
 
-        <div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-800 tracking-tight">
+        <div class="min-w-0">
+
+            <h1 class="text-xl sm:text-2xl lg:text-3xl
+                       font-bold
+                       text-gray-800
+                       tracking-tight">
+
                 Liste des Fournisseurs
+
             </h1>
 
-            <p class="mt-1 text-sm sm:text-base text-gray-500">
+            <p class="mt-1 text-xs sm:text-sm lg:text-base text-gray-500">
+
                 Gestion de vos fournisseurs
+
             </p>
+
         </div>
 
+
+        {{-- Ajouter --}}
+
         <a href="{{ route('fournisseurs.create') }}"
-           class="w-full sm:w-auto inline-flex items-center justify-center gap-2
-                  bg-blue-600 hover:bg-blue-700 active:bg-blue-800
-                  text-white font-semibold
-                  px-4 py-2.5 rounded-xl shadow-sm
+           class="w-full sm:w-auto
+                  inline-flex items-center justify-center gap-2
+                  min-h-[44px]
+                  px-4 sm:px-5
+                  bg-blue-600
+                  hover:bg-blue-700
+                  active:bg-blue-800
+                  text-white
+                  text-sm sm:text-base
+                  font-semibold
+                  rounded-xl
+                  shadow-sm
                   transition duration-200">
 
-            <i class="fas fa-plus"></i>
+            <i class="fas fa-plus text-sm"></i>
 
-            <span>Ajouter un Fournisseur</span>
+            <span>Ajouter un fournisseur</span>
 
         </a>
 
     </div>
+
 
 
     {{-- =========================================================
@@ -42,15 +82,29 @@
 
     @if(session('success'))
 
-        <div class="mb-5 flex items-start gap-3
-                    bg-green-50 border border-green-200
+        <div class="mb-5
+                    flex items-start gap-3
+                    bg-green-50
+                    border border-green-200
                     text-green-800
-                    px-4 py-3 rounded-xl shadow-sm">
+                    px-4 py-3.5
+                    rounded-xl
+                    shadow-sm">
 
-            <i class="fas fa-check-circle text-green-600 mt-0.5"></i>
+            <div class="flex-shrink-0
+                        w-7 h-7
+                        rounded-full
+                        bg-green-100
+                        flex items-center justify-center">
 
-            <p class="text-sm sm:text-base font-medium">
+                <i class="fas fa-check text-green-600 text-xs"></i>
+
+            </div>
+
+            <p class="text-sm sm:text-base font-medium pt-1">
+
                 {{ session('success') }}
+
             </p>
 
         </div>
@@ -58,33 +112,82 @@
     @endif
 
 
+
     {{-- =========================================================
-         TABLEAU
+         CONTENEUR PRINCIPAL
     ========================================================== --}}
 
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white
+                rounded-2xl
+                shadow-sm
+                border border-gray-200
+                overflow-hidden">
 
-        {{-- Barre supérieure --}}
 
-        <div class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gray-50">
+        {{-- =====================================================
+             BARRE SUPÉRIEURE
+        ====================================================== --}}
 
-            <div class="flex items-center gap-2">
+        <div class="px-4 sm:px-5 lg:px-6
+                    py-4 sm:py-5
+                    border-b border-gray-100
+                    bg-gray-50/80">
 
-                <div class="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center">
+            <div class="flex items-center justify-between gap-3">
 
-                    <i class="fas fa-truck text-orange-600"></i>
+                <div class="flex items-center gap-3 min-w-0">
+
+                    <div class="w-10 h-10
+                                rounded-xl
+                                bg-orange-100
+                                flex items-center justify-center
+                                flex-shrink-0">
+
+                        <i class="fas fa-truck
+                                  text-orange-600
+                                  text-base"></i>
+
+                    </div>
+
+
+                    <div class="min-w-0">
+
+                        <h2 class="text-base sm:text-lg
+                                   font-bold
+                                   text-gray-800">
+
+                            Fournisseurs
+
+                        </h2>
+
+                        <p class="text-xs sm:text-sm
+                                  text-gray-500
+                                  mt-0.5">
+
+                            Liste des fournisseurs enregistrés
+
+                        </p>
+
+                    </div>
 
                 </div>
 
-                <div>
 
-                    <h2 class="text-base sm:text-lg font-bold text-gray-800">
-                        Fournisseurs
-                    </h2>
+                {{-- Nombre --}}
 
-                    <p class="text-xs sm:text-sm text-gray-500">
-                        Liste des fournisseurs enregistrés
-                    </p>
+                <div class="hidden sm:flex
+                            items-center justify-center
+                            px-3 py-1.5
+                            rounded-lg
+                            bg-white
+                            border border-gray-200
+                            text-xs
+                            font-semibold
+                            text-gray-500
+                            whitespace-nowrap">
+
+                    {{ $fournisseurs->total() ?? $fournisseurs->count() }}
+                    fournisseur(s)
 
                 </div>
 
@@ -93,54 +196,113 @@
         </div>
 
 
+
         {{-- =====================================================
-             RESPONSIVE TABLE
+             TABLEAU RESPONSIVE
         ====================================================== --}}
 
         <div class="overflow-x-auto">
 
-            <table class="min-w-[900px] w-full divide-y divide-gray-200">
+            <table class="w-full min-w-[900px] divide-y divide-gray-100">
 
-                {{-- En-tête --}}
 
-                <thead class="bg-orange-500">
+                {{-- =================================================
+                     EN-TÊTE DU TABLEAU
+                ================================================== --}}
+
+                <thead class="bg-gray-50">
 
                     <tr>
 
-                        <th class="px-3 sm:px-4 py-3 text-left
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+                        <th class="w-16
+                                   px-4 sm:px-5
+                                   py-3.5
+                                   text-left
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             N°
+
                         </th>
 
-                        <th class="px-3 sm:px-4 py-3 text-left
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+
+                        <th class="px-4 sm:px-5
+                                   py-3.5
+                                   text-left
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             Nom
+
                         </th>
 
-                        <th class="px-3 sm:px-4 py-3 text-left
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+
+                        <th class="px-4 sm:px-5
+                                   py-3.5
+                                   text-left
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             Email
+
                         </th>
 
-                        <th class="px-3 sm:px-4 py-3 text-left
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+
+                        <th class="px-4 sm:px-5
+                                   py-3.5
+                                   text-left
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             Téléphone
+
                         </th>
 
-                        <th class="px-3 sm:px-4 py-3 text-left
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+
+                        <th class="px-4 sm:px-5
+                                   py-3.5
+                                   text-left
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             Adresse
+
                         </th>
 
-                        <th class="px-3 sm:px-4 py-3 text-center
-                                   text-xs font-bold text-white uppercase
-                                   tracking-wider whitespace-nowrap">
+
+                        <th class="w-40
+                                   px-4 sm:px-5
+                                   py-3.5
+                                   text-center
+                                   text-[11px] sm:text-xs
+                                   font-bold
+                                   text-gray-500
+                                   uppercase
+                                   tracking-wider
+                                   whitespace-nowrap">
+
                             Actions
+
                         </th>
 
                     </tr>
@@ -148,217 +310,290 @@
                 </thead>
 
 
-                {{-- Corps --}}
+
+                {{-- =================================================
+                     CORPS
+                ================================================== --}}
 
                 <tbody class="bg-white divide-y divide-gray-100">
 
                     @forelse($fournisseurs as $fournisseur)
 
-                    <tr class="hover:bg-orange-50/40 transition duration-150">
-
-                        {{-- N° --}}
-
-                        <td class="px-3 sm:px-4 py-3
-                                   text-sm font-semibold text-gray-600
-                                   whitespace-nowrap">
-
-                            {{ $loop->iteration }}
-
-                        </td>
+                        <tr class="group
+                                   hover:bg-gray-50/70
+                                   transition duration-150">
 
 
-                        {{-- Nom --}}
+                            {{-- N° --}}
 
-                        <td class="px-3 sm:px-4 py-3
-                                   text-sm font-semibold text-gray-800
-                                   whitespace-nowrap">
+                            <td class="px-4 sm:px-5
+                                       py-4
+                                       text-sm
+                                       font-semibold
+                                       text-gray-500
+                                       whitespace-nowrap">
 
-                            {{ $fournisseur->nom_fournisseur }}
+                                {{ $loop->iteration }}
 
-                        </td>
-
-
-                        {{-- Email --}}
-
-                        <td class="px-3 sm:px-4 py-3
-                                   text-sm text-gray-600
-                                   whitespace-nowrap">
-
-                            {{ $fournisseur->email ?: '-' }}
-
-                        </td>
+                            </td>
 
 
-                        {{-- Téléphone --}}
 
-                        <td class="px-3 sm:px-4 py-3
-                                   text-sm text-gray-700
-                                   whitespace-nowrap">
+                            {{-- NOM --}}
 
-                            {{ $fournisseur->contact_fournisseur ?: '-' }}
+                            <td class="px-4 sm:px-5
+                                       py-4
+                                       text-sm
+                                       font-semibold
+                                       text-gray-800
+                                       whitespace-nowrap">
 
-                        </td>
+                                {{ $fournisseur->nom_fournisseur }}
 
-
-                        {{-- Adresse --}}
-
-                        <td class="px-3 sm:px-4 py-3 text-sm text-gray-600">
-
-                            <div class="max-w-xs truncate"
-                                 title="{{ $fournisseur->adresse_fournisseur }}">
-
-                                {{ $fournisseur->adresse_fournisseur ?: '-' }}
-
-                            </div>
-
-                        </td>
+                            </td>
 
 
-                        {{-- =================================================
-                             ACTIONS AVEC ICÔNES
-                        ================================================== --}}
 
-                        <td class="px-3 sm:px-4 py-3">
+                            {{-- EMAIL --}}
 
-                            <div class="flex items-center justify-center gap-1">
+                            <td class="px-4 sm:px-5
+                                       py-4
+                                       text-sm
+                                       text-gray-600
+                                       whitespace-nowrap">
 
-                                {{-- VOIR --}}
+                                {{ $fournisseur->email ?: '-' }}
 
-                                <a
-                                    href="{{ route('fournisseurs.show', $fournisseur->id) }}"
-                                    title="Voir le fournisseur"
-                                    aria-label="Voir le fournisseur"
-
-                                    class="inline-flex items-center justify-center
-                                           w-9 h-9
-                                           rounded-lg
-                                           text-indigo-600
-                                           hover:bg-indigo-50
-                                           hover:text-indigo-700
-                                           active:bg-indigo-100
-                                           transition duration-200"
-                                >
-
-                                    <i class="fas fa-eye text-sm"></i>
-
-                                </a>
+                            </td>
 
 
-                                {{-- MODIFIER --}}
 
-                                <a
-                                    href="{{ route('fournisseurs.edit', $fournisseur->id) }}"
-                                    title="Modifier le fournisseur"
-                                    aria-label="Modifier le fournisseur"
+                            {{-- TÉLÉPHONE --}}
 
-                                    class="inline-flex items-center justify-center
-                                           w-9 h-9
-                                           rounded-lg
-                                           text-amber-600
-                                           hover:bg-amber-50
-                                           hover:text-amber-700
-                                           active:bg-amber-100
-                                           transition duration-200"
-                                >
+                            <td class="px-4 sm:px-5
+                                       py-4
+                                       text-sm
+                                       text-gray-700
+                                       whitespace-nowrap">
 
-                                    <i class="fas fa-pen text-sm"></i>
+                                {{ $fournisseur->contact_fournisseur ?: '-' }}
 
-                                </a>
+                            </td>
 
 
-                                {{-- SUPPRIMER --}}
 
-                                <form
-                                    action="{{ route('fournisseurs.destroy', $fournisseur->id) }}"
-                                    method="POST"
-                                    class="inline"
-                                >
+                            {{-- ADRESSE --}}
 
-                                    @csrf
-                                    @method('DELETE')
+                            <td class="px-4 sm:px-5
+                                       py-4
+                                       text-sm
+                                       text-gray-600">
 
-                                    <button
-                                        type="submit"
-                                        title="Supprimer le fournisseur"
-                                        aria-label="Supprimer le fournisseur"
+                                <div class="max-w-xs
+                                            truncate"
+                                     title="{{ $fournisseur->adresse_fournisseur }}">
 
-                                        class="inline-flex items-center justify-center
-                                               w-9 h-9
-                                               rounded-lg
-                                               text-red-600
-                                               hover:bg-red-50
-                                               hover:text-red-700
-                                               active:bg-red-100
-                                               transition duration-200"
-
-                                        onclick="return confirm('Voulez-vous vraiment supprimer ce fournisseur ?')"
-                                    >
-
-                                        <i class="fas fa-trash-alt text-sm"></i>
-
-                                    </button>
-
-                                </form>
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                    @empty
-
-                    {{-- =================================================
-                         AUCUN FOURNISSEUR
-                    ================================================== --}}
-
-                    <tr>
-
-                        <td colspan="6"
-                            class="px-4 py-12 text-center">
-
-                            <div class="flex flex-col items-center justify-center">
-
-                                <div class="w-14 h-14 rounded-full bg-gray-100
-                                            flex items-center justify-center mb-3">
-
-                                    <i class="fas fa-truck text-gray-400 text-xl"></i>
+                                    {{ $fournisseur->adresse_fournisseur ?: '-' }}
 
                                 </div>
 
-                                <p class="text-sm sm:text-base
-                                          font-semibold text-gray-600">
+                            </td>
 
-                                    Aucun fournisseur trouvé
 
-                                </p>
 
-                                <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                            {{-- =================================================
+                                 ACTIONS
+                            ================================================== --}}
 
-                                    Commencez par ajouter un fournisseur.
+                            <td class="px-4 sm:px-5 py-4">
 
-                                </p>
+                                <div class="flex
+                                            items-center
+                                            justify-center
+                                            gap-2">
 
-                                <a
-                                    href="{{ route('fournisseurs.create') }}"
-                                    class="mt-4 inline-flex items-center gap-2
-                                           bg-blue-600 hover:bg-blue-700
-                                           text-white font-semibold
-                                           px-4 py-2 rounded-lg
-                                           text-sm transition"
-                                >
 
-                                    <i class="fas fa-plus"></i>
+                                    {{-- =========================
+                                         VOIR
+                                    ========================== --}}
 
-                                    Ajouter un fournisseur
+                                    <a href="{{ route('fournisseurs.show', $fournisseur->id) }}"
+                                       title="Voir le fournisseur"
+                                       aria-label="Voir le fournisseur"
 
-                                </a>
+                                       class="w-10 h-10
+                                              flex items-center justify-center
+                                              rounded-xl
+                                              bg-blue-50
+                                              border border-blue-100
+                                              text-blue-600
+                                              hover:bg-blue-600
+                                              hover:border-blue-600
+                                              hover:text-white
+                                              active:bg-blue-700
+                                              transition-all duration-200
+                                              shadow-sm">
 
-                            </div>
+                                        <i class="fas fa-eye text-base"></i>
 
-                        </td>
+                                    </a>
 
-                    </tr>
+
+
+                                    {{-- =========================
+                                         MODIFIER
+                                    ========================== --}}
+
+                                    <a href="{{ route('fournisseurs.edit', $fournisseur->id) }}"
+                                       title="Modifier le fournisseur"
+                                       aria-label="Modifier le fournisseur"
+
+                                       class="w-10 h-10
+                                              flex items-center justify-center
+                                              rounded-xl
+                                              bg-amber-50
+                                              border border-amber-100
+                                              text-amber-600
+                                              hover:bg-amber-500
+                                              hover:border-amber-500
+                                              hover:text-white
+                                              active:bg-amber-600
+                                              transition-all duration-200
+                                              shadow-sm">
+
+                                        <i class="fas fa-pen text-base"></i>
+
+                                    </a>
+
+
+
+                                    {{-- =========================
+                                         SUPPRIMER
+                                    ========================== --}}
+
+                                    <form
+                                        action="{{ route('fournisseurs.destroy', $fournisseur->id) }}"
+                                        method="POST"
+                                        class="inline">
+
+                                        @csrf
+
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            title="Supprimer le fournisseur"
+                                            aria-label="Supprimer le fournisseur"
+
+                                            class="w-10 h-10
+                                                   flex items-center justify-center
+                                                   rounded-xl
+                                                   bg-red-50
+                                                   border border-red-100
+                                                   text-red-600
+                                                   hover:bg-red-600
+                                                   hover:border-red-600
+                                                   hover:text-white
+                                                   active:bg-red-700
+                                                   transition-all duration-200
+                                                   shadow-sm"
+
+                                            onclick="return confirm('Voulez-vous vraiment supprimer ce fournisseur ?')">
+
+                                            <i class="fas fa-trash-alt text-base"></i>
+
+                                        </button>
+
+                                    </form>
+
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    @empty
+
+
+                        {{-- =================================================
+                             AUCUN FOURNISSEUR
+                        ================================================== --}}
+
+                        <tr>
+
+                            <td colspan="6"
+                                class="px-4 py-16 text-center">
+
+                                <div class="flex
+                                            flex-col
+                                            items-center
+                                            justify-center">
+
+
+                                    <div class="w-16 h-16
+                                                rounded-2xl
+                                                bg-gray-100
+                                                flex items-center
+                                                justify-center
+                                                mb-4">
+
+                                        <i class="fas fa-truck
+                                                  text-gray-400
+                                                  text-2xl"></i>
+
+                                    </div>
+
+
+                                    <p class="text-base sm:text-lg
+                                              font-semibold
+                                              text-gray-700">
+
+                                        Aucun fournisseur trouvé
+
+                                    </p>
+
+
+                                    <p class="text-xs sm:text-sm
+                                              text-gray-400
+                                              mt-1">
+
+                                        Commencez par ajouter un fournisseur.
+
+                                    </p>
+
+
+                                    <a
+                                        href="{{ route('fournisseurs.create') }}"
+                                        class="mt-5
+                                               inline-flex
+                                               items-center
+                                               justify-center
+                                               gap-2
+                                               min-h-[42px]
+                                               px-4
+                                               bg-blue-600
+                                               hover:bg-blue-700
+                                               text-white
+                                               text-sm
+                                               font-semibold
+                                               rounded-xl
+                                               shadow-sm
+                                               transition">
+
+                                        <i class="fas fa-plus text-xs"></i>
+
+                                        Ajouter un fournisseur
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
 
                     @endforelse
 
@@ -369,21 +604,25 @@
         </div>
 
 
+
         {{-- =========================================================
              PAGINATION
         ========================================================== --}}
 
         @if($fournisseurs->hasPages())
 
-            <div class="px-4 sm:px-6 py-4
+            <div class="px-4 sm:px-6
+                        py-4
                         border-t border-gray-100
-                        bg-gray-50 overflow-x-auto">
+                        bg-gray-50/70
+                        overflow-x-auto">
 
                 {{ $fournisseurs->links() }}
 
             </div>
 
         @endif
+
 
     </div>
 
